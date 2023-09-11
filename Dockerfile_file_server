@@ -1,0 +1,8 @@
+FROM python:3.11.4-alpine
+
+WORKDIR /file_server_application
+COPY fileServerApp .
+
+RUN pip install --upgrade pip && pip install -r ./resources/requirements.txt
+
+CMD ["python3.11", "api_gateway.py"]

@@ -1,0 +1,34 @@
+version: "3.9"
+
+name: file-server-logic
+services:
+
+  file-server:
+    container_name: file-server-app
+    env_file: fileServerApp/resources/.env
+    build:
+      dockerfile: Dockerfile_file_server
+    network_mode: bridge
+    ports:
+      - "8080:8080"
+
+  main:
+    container_name: main-app
+    env_file: mainBusinessLogicApp/resources/.env
+
+#   important if 'file-server' is on the same compose project
+    depends_on:
+      file-server:
+        condition: service_started
+#   ---------------------------------------------------------
+
+    build:
+      dockerfile: Dockerfile_main
+    network_mode: container:file-server-app
+    volumes:
+      - database:/main_application/pics
+
+volumes:
+  database:
+    name: database
+    external: true
