@@ -62,6 +62,7 @@ async def request_and_save_file(filename: os.PathLike = None) -> str | os.PathLi
 
 
 async def main():
+    await asyncio.sleep(3)
     filename: os.PathLike | str = await request_and_save_file()
     print(filename)
 
